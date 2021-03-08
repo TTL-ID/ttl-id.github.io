@@ -1,0 +1,21 @@
+<svg id="Component_7_1" data-name="Component 7 – 1" xmlns="http://www.w3.org/2000/svg" width="103" height="104" viewBox="0 0 103 104">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #e8fcf8;
+      }
+
+      .cls-2 {
+        fill: #128870;
+      }
+    </style>
+  </defs>
+  <g id="Group_15" data-name="Group 15" transform="translate(-0.399)">
+    <ellipse id="Ellipse_13" data-name="Ellipse 13" class="cls-1" cx="51.5" cy="52" rx="51.5" ry="52" transform="translate(0.399)"/>
+    <g id="_014-instagram" data-name="014-instagram" transform="translate(17.311 17.323)">
+      <path id="Path_8" data-name="Path 8" class="cls-2" d="M50.536,0H18.756A18.778,18.778,0,0,0,0,18.757v31.78A18.778,18.778,0,0,0,18.756,69.294h31.78A18.778,18.778,0,0,0,69.293,50.537V18.757A18.778,18.778,0,0,0,50.536,0ZM65.231,50.537A14.711,14.711,0,0,1,50.536,65.232H18.756A14.711,14.711,0,0,1,4.061,50.537V18.757A14.711,14.711,0,0,1,18.756,4.062h31.78A14.711,14.711,0,0,1,65.231,18.757Zm0,0" transform="translate(0.001 0)"/>
+      <path id="Path_9" data-name="Path 9" class="cls-2" d="M134.951,116A18.947,18.947,0,1,0,153.9,134.951,18.968,18.968,0,0,0,134.951,116Zm0,33.832a14.885,14.885,0,1,1,14.885-14.885A14.9,14.9,0,0,1,134.951,149.836Zm0,0" transform="translate(-100.304 -100.304)"/>
+      <path id="Path_10" data-name="Path 10" class="cls-2" d="M363.575,66.285a5.6,5.6,0,1,0,5.6,5.6A5.6,5.6,0,0,0,363.575,66.285Zm0,7.135a1.536,1.536,0,1,1,1.537-1.536A1.538,1.538,0,0,1,363.575,73.42Zm0,0" transform="translate(-309.528 -57.314)"/>
+    </g>
+  </g>
+</svg>
