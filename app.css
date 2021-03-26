@@ -90,6 +90,10 @@ a:active {
 	color: #b30000;
 }
 
+.pure-button, a.pure-button {
+	color: black;
+}
+
 @media screen and (min-width: 48em) {
 	body {
 		width: 100%;

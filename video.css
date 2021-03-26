@@ -64,7 +64,7 @@ a:active {
 	color: #b30000;
 }
 
-.color-red {
+.color-red, a.color-red {
 	background-color: #eb0000;
 	color: white;
 }

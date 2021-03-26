@@ -1,5 +1,13 @@
+html {
+	background-image: url(aset/latar-samping.png);
+	background-position-y: bottom;
+	background-repeat: no-repeat;
+	background-size: 160px;
+}
+
 body.pure-g {
 	align-items: center;
+	background-color: rgba(255, 255, 255, 0.9);
 	flex-flow: column nowrap;
 	height: 100vh;
 	margin: 0 auto;
@@ -64,15 +72,6 @@ h1 {
 	display: block;
 }
 
-.color-red {
-	background-color: #eb0000;
-	color: white;
-}
-
-.color-green {
-	background-color: #17AC8C;
-}
-
 a, a:visited {
 	color: #2e2eff;
 	text-decoration: none;
@@ -88,6 +87,16 @@ a.pure-button:hover, a.pure-button:active {
 
 a:active {
 	color: #b30000;
+}
+
+.color-red, a.color-red {
+	background-color: #eb0000;
+	color: white;
+}
+
+.color-green, a.color-green {
+	background-color: #17AC8C;
+	color: black;
 }
 
 @media screen and (min-width: 48em) {
