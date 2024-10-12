@@ -73,6 +73,10 @@ footer {
 	text-overflow: ellipsis;
 }
 
+.nowrap {
+	white-space: nowrap;
+}
+
 a, a:visited {
 	color: #2e2eff;
 	text-decoration: none;
