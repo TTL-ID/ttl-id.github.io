@@ -11,8 +11,8 @@ body.pure-g {
 	flex-flow: column nowrap;
 	height: 100vh;
 	margin: 0 auto;
-	width: 100vw;
 	max-width: 1200px;
+	width: 100vw;
 }
 
 .main-container {
@@ -38,8 +38,12 @@ body.pure-g {
 	padding: 0 16px 8px;
 }
 
-h1 {
-	margin-top: 0;
+.judul {
+	margin: 0;
+}
+
+.subjudul {
+	margin: 0.97em 0 0;
 }
 
 .center {
@@ -64,6 +68,17 @@ h1 {
 	width: calc(20% - 16px);
 }
 
+.tautan {
+	margin-top: 16px;
+}
+
+.tautan a {
+	background-color: white;
+	border: 1px solid #17AC8C;
+	display: block;
+	margin: 4px 0;
+}
+
 .show-md {
 	display: none;
 }
@@ -72,16 +87,19 @@ h1 {
 	display: block;
 }
 
-a, a:visited {
+a,
+a:visited {
 	color: #2e2eff;
 	text-decoration: none;
 }
 
-a:hover, a:active {
+a:hover,
+a:active {
 	text-decoration: underline;
 }
 
-a.pure-button:hover, a.pure-button:active {
+a.pure-button:hover,
+a.pure-button:active {
 	text-decoration: none;
 }
 
@@ -89,18 +107,22 @@ a:active {
 	color: #b30000;
 }
 
-.color-red, a.color-red {
+.color-red,
+a.color-red {
 	background-color: #eb0000;
 	color: white;
 }
 
-.color-green, a.color-green {
+.color-green,
+a.color-green {
 	background-color: #17AC8C;
 	color: black;
 }
 
 @media screen and (min-width: 48em) {
-	body.pure-g, .main-container {
+
+	body.pure-g,
+	.main-container {
 		flex-direction: row;
 	}
 

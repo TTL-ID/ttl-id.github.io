@@ -8,8 +8,8 @@ html {
 
 body {
 	background-color: #ffffff;
-	min-height: calc(100vh - 32px);
 	margin: 0 auto;
+	min-height: calc(100vh - 32px);
 	padding: 16px;
 	width: calc(100% - 32px);
 }
@@ -24,8 +24,8 @@ header {
 
 header img {
 	background-color: #ffffff;
-	border: 0;
 	border-radius: 8px;
+	border: 0;
 	height: 16px;
 	margin: -8px 8px -8px -8px;
 	padding: 8px;
@@ -68,6 +68,7 @@ footer {
 	-webkit-box-orient: vertical;
 	-webkit-line-clamp: 3;
 	display: -webkit-box;
+	line-clamp: 3;
 	max-width: 100%;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -77,16 +78,19 @@ footer {
 	white-space: nowrap;
 }
 
-a, a:visited {
+a,
+a:visited {
 	color: #2e2eff;
 	text-decoration: none;
 }
 
-a:hover, a:active {
+a:hover,
+a:active {
 	text-decoration: underline;
 }
 
-a.pure-button:hover, a.pure-button:active {
+a.pure-button:hover,
+a.pure-button:active {
 	text-decoration: none;
 }
 
@@ -94,14 +98,15 @@ a:active {
 	color: #b30000;
 }
 
-.pure-button, a.pure-button {
+.pure-button,
+a.pure-button {
 	color: black;
 }
 
 @media screen and (min-width: 48em) {
 	body {
-		width: 100%;
 		max-width: 800px;
+		width: 100%;
 	}
 
 	.caption {
@@ -110,5 +115,6 @@ a:active {
 
 	.caption figcaption {
 		-webkit-line-clamp: 2;
+		line-clamp: 2;
 	}
 }
