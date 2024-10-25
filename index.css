@@ -40,6 +40,7 @@ body.pure-g {
 
 .judul {
 	margin: 0;
+	text-align: center;
 }
 
 .subjudul {
@@ -128,6 +129,14 @@ a.color-green {
 
 	.main-container {
 		margin-bottom: 48px;
+	}
+
+	.judul {
+		text-align: initial;
+	}
+
+	.medsos img {
+		margin: 16px 16px 0 0;
 	}
 
 	.show-md {
