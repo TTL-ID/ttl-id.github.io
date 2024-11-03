@@ -89,13 +89,17 @@ a:active {
 	text-decoration: underline;
 }
 
+a:active {
+	color: #b30000;
+}
+
+a.pure-button:visited {
+	color: rgba(0, 0, 0, 0.8);
+}
+
 a.pure-button:hover,
 a.pure-button:active {
 	text-decoration: none;
-}
-
-a:active {
-	color: #b30000;
 }
 
 .pure-button,
