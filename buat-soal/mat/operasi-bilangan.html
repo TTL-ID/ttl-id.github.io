@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="id" dir="ltr">
+<head>
+	<title>Operasi Bilangan &mdash; Buat Soal &mdash; Team Tanpa Les Indonesia</title>
+	<meta charset="utf-8">
+	<meta name="author" content="Muhammad Rifqi Priyo Susanto">
+	<meta name="publisher" content="Team Tanpa Les Indonesia">
+	<meta name="viewport" content="width=device-width,height=device-height,initial-scale=1">
+	<link rel="dns-prefetch" href="https://unpkg.com/">
+	<link rel="shortcut icon" href="/aset/logo.svg">
+	<link rel="stylesheet" href="https://unpkg.com/purecss@2.0.5/build/pure-min.css" integrity="sha384-LTIDeidl25h2dPxrB2Ekgc9c7sEC3CWGM6HeFmuDNUjX76Ert4Z4IY714dhZHPLd" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://unpkg.com/purecss@2.0.5/build/grids-responsive-min.css" crossorigin="anonymous">
+	<link rel="stylesheet" href="/buat-soal/gaya.css">
+	<style>
+#menuParameter, #menuSoal, #hasilPeriksa {
+	margin: 16px 0;
+}
+
+#panelStopwatch, #hasilSoal, #hasilSoal input, #hasilPeriksa {
+	font-size: 24px;
+}
+
+#panelStopwatch {
+	background: white;
+	padding: 8px;
+	position: sticky;
+	top: 0;
+	text-align: center;
+	z-index: 99;
+}
+
+.naskahSoal {
+	display: flex;
+	flex-direction: column;
+	margin: 8px 0;
+}
+
+.naskahSoal input {
+	margin: 4px 0;
+}
+
+.naskahSoal input:disabled {
+	color: black;
+}
+
+.benar {
+	outline: 4px solid green;
+}
+
+.salah {
+	outline: 4px solid red;
+}
+
+.ikonJawaban {
+	font-size: 16px;
+	margin-left: 16px;
+}
+
+.kunciJawaban {
+	color: red;
+	margin-left: 16px;
+}
+
+@media screen and (min-width: 48em) {
+	.naskahSoal {
+		align-items: center;
+		flex-direction: row;
+	}
+}
+	</style>
+</head>
+<body>
+	<header><a href="/"><img alt="Beranda" src="/aset/logo.svg" width="58" height="59"></a> Team Tanpa Les Indonesia</header>
+	<h1>Operasi Bilangan Bulat</h1>
+	<div id="menuParameter">
+		<p>Operasi bilangan bulat ini mencakup penjumlahan (+), pengurangan (-), perkalian (×), dan kurung.</p>
+		<div>
+			<label for="isianJumlah">Jumlah soal:</label>
+			<input type="number" name="isianJumlah" id="isianJumlah" min="1" value="5">
+			<button id="tombolBuat" disabled>Buat Soal</button>
+		</div>
+		<p><i lang="en">Stopwatch</i> akan dimulai segera setelah soal selesai dibuat.</p>
+	</div>
+	<div id="menuSoal" style="display:none;">
+		<div id="panelStopwatch"></div>
+		<div id="hasilSoal"></div>
+		<div id="hasilPeriksa"></div>
+		<div>
+			<button id="tombolPeriksa" disabled>Periksa Jawaban</button>
+			<button id="tombolUlang">Kembali ke Menu Awal</button>
+		</div>
+	</div>
+	<footer>Hak Cipta &copy; 2025 Team Tanpa Les Indonesia</footer>
+	<script>
+var kunciJawaban = [];
+var waktuMulai = 0;
+var intervalStopwatch;
+
+window.addEventListener("load", function() {
+	tombolBuat.removeAttribute("disabled");
+	tombolPeriksa.setAttribute("disabled", "disabled");
+});
+
+tombolBuat.addEventListener("click", function() {
+	var jumlahSoal = isianJumlah.value;
+	if (isNaN(jumlahSoal) || jumlahSoal < 1) {
+		alert("Jumlah soal setidaknya satu!");
+		return;
+	}
+	hasilSoal.innerHTML = "";
+	kunciJawaban = [];
+	var daftarSoal = "";
+	for (var i = 0; i < jumlahSoal; i ++) {
+		var soal = buatSoal();
+		while (Math.abs(soal[1]) < 10 || Math.abs(soal[1]) > 99) {
+			soal = buatSoal();
+		}
+		kunciJawaban.push(soal[1]);
+		daftarSoal += "<div class=\"naskahSoal\">";
+		daftarSoal += "<div>" + soal[0] + "&nbsp;</div>";
+		daftarSoal += "<input type=\"number\" class=\"isianJawaban\" data-nomor=\"" + i + "\">";
+		daftarSoal += "</div>";
+	}
+	hasilSoal.innerHTML = daftarSoal;
+	hasilPeriksa.innerHTML = "";
+
+	waktuMulai = Date.now();
+	panelStopwatch.innerHTML = "";
+	intervalStopwatch = setInterval(function () {
+		var durasi = Date.now() - waktuMulai; // ms
+		var detik = (durasi % (60 * 1000)) / 1000;
+		var menit = Math.floor(durasi / (60 * 1000));
+		var teksDetik = (detik < 10 ? "0" : "") + detik.toFixed(1).replaceAll(".", ",");
+		var teksMenit = (menit < 10 ? "0" : "") + menit;
+		panelStopwatch.innerText = teksMenit + ":" + teksDetik;
+	}, 16);
+
+	tombolPeriksa.removeAttribute("disabled");
+	menuParameter.style.display = "none";
+	menuSoal.style.display = "";
+});
+
+tombolPeriksa.addEventListener("click", function() {
+	clearInterval(intervalStopwatch);
+	var daftarIsianJawaban = document.getElementsByClassName("isianJawaban");
+	var jumlahBenar = 0;
+	for (var i = 0; i < daftarIsianJawaban.length; i ++) {
+		var isian = daftarIsianJawaban[i];
+		var jawabanBenar = kunciJawaban[Number(isian.dataset.nomor)];
+		var jawabanPemain = Number(isian.value);
+		if (isian.value.trim().length > 0 && jawabanBenar == jawabanPemain) {
+			isian.classList.add("benar");
+			isian.insertAdjacentHTML("afterend", "<div><span class=\"ikonJawaban\">✅</span></div>");
+			jumlahBenar ++;
+		} else {
+			isian.classList.add("salah");
+			isian.insertAdjacentHTML("afterend", "<div><span class=\"ikonJawaban\">❌</span><span class=\"kunciJawaban\">(" + jawabanBenar + ")</span></div>");
+		}
+		isian.setAttribute("disabled", "disabled");
+	}
+
+	var persentaseBenar = (jumlahBenar / kunciJawaban.length * 100).toFixed(2).toString().replaceAll(".", ",");
+	hasilPeriksa.innerHTML = "Skor: " + jumlahBenar + "/" + kunciJawaban.length + " (" + persentaseBenar + "%)";
+
+	tombolPeriksa.setAttribute("disabled", "disabled");
+	window.scrollTo(0, hasilPeriksa.offsetTop);
+});
+
+tombolUlang.addEventListener("click", function() {
+	clearInterval(intervalStopwatch);
+	menuParameter.style.display = "";
+	menuSoal.style.display = "none";
+});
+
+var bilanganBulatAcak = function(a, b) {
+	a = a - 0.49;
+	b = b + 0.49;
+	return Math.round(Math.random() * (b - a) + a); // [a, b]
+};
+
+var operasiAcak = function() {
+	return ["+", "-", "×"][
+		bilanganBulatAcak(0, 2) // [0, 2]
+	];
+};
+
+var buatBilanganAtauKurung = function(bolehKurung) {
+	if (bolehKurung && bilanganBulatAcak(1, 8) <= 3) {
+		var suku = "";
+		suku += "(";
+		suku += bilanganBulatAcak(2, 9) + " ";
+		suku += operasiAcak() + " ";
+		suku += bilanganBulatAcak(2, 9);
+		suku += ")";
+		return [false, suku];
+	} else {
+		return [true, bilanganBulatAcak(2, 9)];
+	}
+}
+
+var buatSoal = function() {
+	var soal = "";
+	var bolehKurung = true;
+
+	var suku = buatBilanganAtauKurung(bolehKurung);
+	bolehKurung = bolehKurung && suku[0];
+	soal += suku[1] + " ";
+	soal += operasiAcak() + " ";
+
+	suku = buatBilanganAtauKurung(bolehKurung);
+	bolehKurung = bolehKurung && suku[0];
+	soal += suku[1] + " ";
+
+	if (bilanganBulatAcak(2, 9) % 2 == 0) {
+		soal += " " + operasiAcak();
+		suku = buatBilanganAtauKurung(bolehKurung);
+		bolehKurung = bolehKurung && suku[0];
+		soal += " " + suku[1];
+	}
+	return [
+		soal + " = ",
+		eval(soal.replaceAll("×", "*"))
+	];
+};
+	</script>
+</body>
+</html>
