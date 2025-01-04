@@ -128,9 +128,9 @@ tombolBuat.addEventListener("click", function() {
 	panelStopwatch.innerHTML = "";
 	intervalStopwatch = setInterval(function () {
 		var durasi = Date.now() - waktuMulai; // ms
-		var detik = (durasi % (60 * 1000)) / 1000;
+		var detik = ((durasi % (60 * 1000)) / 1000).toFixed(1);
 		var menit = Math.floor(durasi / (60 * 1000));
-		var teksDetik = (detik < 10 ? "0" : "") + detik.toFixed(1).replaceAll(".", ",");
+		var teksDetik = (detik < 10 ? "0" : "") + detik.replaceAll(".", ",");
 		var teksMenit = (menit < 10 ? "0" : "") + menit;
 		panelStopwatch.innerText = teksMenit + ":" + teksDetik;
 	}, 16);
