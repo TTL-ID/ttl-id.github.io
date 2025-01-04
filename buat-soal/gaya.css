@@ -40,6 +40,21 @@ footer {
 	padding: 7px 0 8px;
 }
 
+a,
+a:visited {
+	color: #2e2eff;
+	text-decoration: none;
+}
+
+a:hover,
+a:active {
+	text-decoration: underline;
+}
+
+a:active {
+	color: #b30000;
+}
+
 @media screen and (min-width: 48em) {
 	body {
 		max-width: 800px;
