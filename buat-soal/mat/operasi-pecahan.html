@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="id" dir="ltr">
+<head>
+	<title>Operasi Pecahan &mdash; Buat Soal &mdash; Team Tanpa Les Indonesia</title>
+	<meta charset="utf-8">
+	<meta name="author" content="Muhammad Rifqi Priyo Susanto">
+	<meta name="publisher" content="Team Tanpa Les Indonesia">
+	<meta name="viewport" content="width=device-width,height=device-height,initial-scale=1">
+	<meta property="og:title" content="Operasi Pecahan &mdash; Buat Soal">
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="https://teamtanpales.id/buat-soal/mat/operasi-pecahan.html">
+	<meta property="og:image" content="https://teamtanpales.id/aset/logo.svg">
+	<meta property="og:image:type" content="image/svg+xml">
+	<meta property="og:image:width" content="58">
+	<meta property="og:image:height" content="59">
+	<meta property="og:image:alt" content="Logo Team Tanpa Les Indonesia">
+	<meta property="og:locale" content="id_ID">
+	<meta property="og:site_name" content="Team Tanpa Les Indonesia">
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:site" content="@ttlindonesia">
+	<link rel="dns-prefetch" href="https://unpkg.com/">
+	<link rel="shortcut icon" href="/aset/logo.svg">
+	<link rel="stylesheet" href="https://unpkg.com/purecss@2.0.5/build/pure-min.css" integrity="sha384-LTIDeidl25h2dPxrB2Ekgc9c7sEC3CWGM6HeFmuDNUjX76Ert4Z4IY714dhZHPLd" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://unpkg.com/purecss@2.0.5/build/grids-responsive-min.css" crossorigin="anonymous">
+	<link rel="stylesheet" href="/buat-soal/gaya.css">
+	<style>
+#menuParameter, #menuSoal, #hasilPeriksa {
+	margin: 16px 0;
+}
+
+#panelStopwatch, #hasilSoal, #hasilSoal input, #hasilPeriksa {
+	font-size: 24px;
+}
+
+.formWithList div {
+	display: block;
+}
+
+#panelStopwatch {
+	background: white;
+	padding: 8px;
+	position: sticky;
+	top: 0;
+	text-align: center;
+	z-index: 99;
+}
+
+.naskahSoal {
+	display: flex;
+	flex-direction: column;
+	margin: 8px 0;
+}
+
+.naskahSoal input {
+	margin: 4px 0;
+}
+
+.naskahSoal input:disabled {
+	color: black;
+}
+
+.benar {
+	outline: 4px solid green;
+}
+
+.salah {
+	outline: 4px solid red;
+}
+
+.ikonJawaban {
+	font-size: 16px;
+	margin-left: 16px;
+}
+
+.kunciJawaban {
+	color: red;
+	margin-left: 16px;
+}
+
+@media screen and (min-width: 48em) {
+	.formWithList div {
+		display: inline-block;
+	}
+
+	.naskahSoal {
+		align-items: center;
+		flex-direction: row;
+	}
+}
+	</style>
+</head>
+<body>
+	<header><a href="/"><img alt="Beranda" src="/aset/logo.svg" width="58" height="59"></a> Team Tanpa Les Indonesia</header>
+	<h1>Operasi Bilangan Pecahan</h1>
+	<div id="menuParameter">
+		<p>Operasi bilangan pecahan biasa (<code>A/B</code>) ini mencakup penjumlahan (+), pengurangan (-), perkalian (×), pembagian (÷), dan kurung.</p>
+		<p>Pengisian jawaban menggunakan format <code>A/B</code> dengan <code>A</code> dan <code>B</code> bilangan bulat. Jika jawaban berupa bilangan bulat (penyebutnya satu), boleh ditulis tanpa tanda miring (hanya pembilang). Hanya pembilang yang boleh bernilai negatif.</p>
+		<p>
+			<label for="isianJumlah">Jumlah soal:</label>
+			<input type="number" name="isianJumlah" id="isianJumlah" min="1" value="5">
+		</p>
+		<div class="formWithList">
+			<div>Pemeriksaan jawaban:</div>
+			<div class="nowrap">
+				<input type="radio" name="isianSederhana" id="isianSederhanaYa" value="1" checked>
+				<label for="isianSederhanaYa">Wajib bentuk sederhana</label>
+			</div>
+			<div class="nowrap">
+				<input type="radio" name="isianSederhana" id="isianSederhanaTidak" value="0">
+				<label for="isianSederhanaTidak">Tidak wajib</label>
+			</div>
+		</div>
+		<p><button id="tombolBuat" disabled>Buat Soal</button></p>
+		<p><i lang="en">Stopwatch</i> akan dimulai segera setelah soal selesai dibuat.</p>
+	</div>
+	<div id="menuSoal" style="display:none;">
+		<div id="panelStopwatch"></div>
+		<div id="hasilSoal"></div>
+		<div id="hasilPeriksa"></div>
+		<div>
+			<button id="tombolPeriksa" disabled>Periksa Jawaban</button>
+			<button id="tombolUlang">Kembali ke Menu Awal</button>
+		</div>
+	</div>
+	<footer>Hak Cipta &copy; 2025 Team Tanpa Les Indonesia</footer>
+	<script>
+var kunciJawaban = [];
+var waktuMulai = 0;
+var intervalStopwatch;
+
+window.addEventListener("load", function() {
+	tombolBuat.removeAttribute("disabled");
+	tombolPeriksa.setAttribute("disabled", "disabled");
+});
+
+tombolBuat.addEventListener("click", function() {
+	var jumlahSoal = isianJumlah.value;
+	if (isNaN(jumlahSoal) || jumlahSoal < 1) {
+		alert("Jumlah soal setidaknya satu!");
+		return;
+	}
+	hasilSoal.innerHTML = "";
+	kunciJawaban = [];
+	var daftarSoal = "";
+	for (var i = 0; i < jumlahSoal; i ++) {
+		var soal = buatSoal();
+		while (Math.abs(soal[1]) < 10 || Math.abs(soal[1]) > 99) {
+			soal = buatSoal();
+		}
+		kunciJawaban.push(soal[1]);
+		daftarSoal += "<div class=\"naskahSoal\">";
+		daftarSoal += "<div>" + soal[0] + "</div>";
+		daftarSoal += "<input type=\"text\" class=\"isianJawaban\" data-nomor=\"" + i + "\">";
+		daftarSoal += "</div>";
+	}
+	hasilSoal.innerHTML = daftarSoal;
+	hasilPeriksa.innerHTML = "";
+
+	waktuMulai = Date.now();
+	panelStopwatch.innerHTML = "";
+	intervalStopwatch = setInterval(function () {
+		var durasi = Date.now() - waktuMulai; // ms
+		var detik = ((durasi % (60 * 1000)) / 1000).toFixed(1);
+		var menit = Math.floor(durasi / (60 * 1000));
+		var teksDetik = (detik < 10 ? "0" : "") + detik.replaceAll(".", ",");
+		var teksMenit = (menit < 10 ? "0" : "") + menit;
+		panelStopwatch.innerText = teksMenit + ":" + teksDetik;
+	}, 16);
+
+	tombolPeriksa.removeAttribute("disabled");
+	menuParameter.style.display = "none";
+	menuSoal.style.display = "";
+});
+
+tombolPeriksa.addEventListener("click", function() {
+	clearInterval(intervalStopwatch);
+	var wajibSederhana = isianSederhanaYa.checked;
+	var daftarIsianJawaban = document.getElementsByClassName("isianJawaban");
+	var jumlahBenar = 0;
+	for (var i = 0; i < daftarIsianJawaban.length; i ++) {
+		var isian = daftarIsianJawaban[i];
+		var jawabanBenar = kunciJawaban[Number(isian.dataset.nomor)];
+		var jawabanPemain = buatPecahan(isian.value);
+		var jawabanSesuai = samadengan(jawabanBenar, jawabanPemain, wajibSederhana);
+		if (isian.value.trim().length > 0 && jawabanSesuai) {
+			isian.classList.add("benar");
+			isian.insertAdjacentHTML("afterend", "<div><span class=\"ikonJawaban\">✅</span></div>");
+			jumlahBenar ++;
+		} else {
+			isian.classList.add("salah");
+			isian.insertAdjacentHTML("afterend",
+				"<div><span class=\"ikonJawaban\">❌</span><span class=\"kunciJawaban\">" +
+				"<math><mrow><mo>(</mo>" + cetak(jawabanBenar) + "<mo>)</mo></mrow></math>" +
+				"</span></div>");
+		}
+		isian.setAttribute("disabled", "disabled");
+	}
+
+	var persentaseBenar = (jumlahBenar / kunciJawaban.length * 100).toFixed(2).toString().replaceAll(".", ",");
+	hasilPeriksa.innerHTML = "Skor: " + jumlahBenar + "/" + kunciJawaban.length + " (" + persentaseBenar + "%)";
+
+	tombolPeriksa.setAttribute("disabled", "disabled");
+	window.scrollTo(0, hasilPeriksa.offsetTop);
+});
+
+tombolUlang.addEventListener("click", function() {
+	clearInterval(intervalStopwatch);
+	menuParameter.style.display = "";
+	menuSoal.style.display = "none";
+});
+
+var buatPecahan = function(teks) {
+	teks = teks.trim();
+	if (teks.length == 0) {
+		return [0, 0];
+	}
+
+	teks = teks.replaceAll(",", ".");
+	teks = teks.split(/[\/\\÷]+/);
+	if (teks.length == 2) {
+		if (teks[0].trim().length == 0 || teks[1].trim().length == 0) {
+			return [0, 0];
+		} else {
+			var pembilang = Number(teks[0]);
+			var penyebut = Number(teks[1]);
+			if (Number.isNaN(pembilang) || Number.isNaN(penyebut)) {
+				return [0, 0];
+			} else {
+				return [Math.round(pembilang), Math.round(penyebut)];
+			}
+		}
+	} else if (teks.length == 1) {
+		if (teks[0].trim().length == 0) {
+			return [0, 0];
+		} else {
+			var bilangan = Number(teks[0]);
+			if (Number.isNaN(bilangan)) {
+				return [0, 0];
+			} else {
+				return [Math.round(bilangan), 1];
+			}
+		}
+	} else {
+		return [0, 0];
+	}
+};
+
+var FPB = function(a, b) {
+	if (Number.isNaN(a) || Number.isNaN(b)) {
+		return a;
+	}
+	while (b != 0) {
+		var t = b;
+		b = a % b;
+		a = t;
+	}
+	return Math.abs(a);
+};
+
+var sederhanakan = function(a) {
+	var f = FPB(a[0], a[1]);
+	return [a[0] / f, a[1] / f];
+};
+
+var tambah = function(a, b) {
+	var k = a[1] * b[1] / FPB(a[1], b[1]); // KPK
+	return sederhanakan([a[0] * (k / a[1]) + b[0] * (k / b[1]), k]);
+};
+
+var kurang = function(a, b) {
+	var k = a[1] * b[1] / FPB(a[1], b[1]); // KPK
+	return sederhanakan([a[0] * (k / a[1]) - b[0] * (k / b[1]), k]);
+};
+
+var kali = function(a, b) {
+	return sederhanakan([a[0] * b[0], a[1] * b[1]]);
+};
+
+var bagi = function(a, b) {
+	return sederhanakan([a[0] * b[1], a[1] * b[0]]);
+};
+
+var hitung = function(a, b, op) {
+	switch (op) {
+		case "+":
+			return tambah(a, b);
+		case "-":
+			return kurang(a, b);
+		case "×":
+			return kali(a, b);
+		case "÷":
+			return bagi(a, b);
+		default:
+			break;
+	}
+};
+
+var samadengan = function(a, b, persis) {
+	if (persis) {
+		return a[0] == b[0] && a[1] == b[1];
+	} else {
+		a = sederhanakan(a);
+		b = sederhanakan(b);
+		return samadengan(a, b, true);
+	}
+};
+
+var cetak = function(a) {
+	return "<mfrac><mn>" + a[0] + "</mn><mn>" + a[1] + "</mn></mfrac>";
+};
+
+var cetakO = function(op) {
+	return "<mo>" + op + "</mo>";
+};
+
+var bilanganBulatAcak = function(a, b) {
+	a = a - 0.49;
+	b = b + 0.49;
+	return Math.round(Math.random() * (b - a) + a); // [a, b]
+};
+
+var bilanganPecahanAcak = function(a, b) {
+	var p = sederhanakan([bilanganBulatAcak(a, b), bilanganBulatAcak(a, b)]);
+	while (p[0] == p[1] || p[1] == 1) {
+		p = sederhanakan([bilanganBulatAcak(a, b), bilanganBulatAcak(a, b)]);
+	}
+	return p;
+};
+
+var operasiAcak = function() {
+	return ["+", "-", "×", "÷"][
+		bilanganBulatAcak(0, 3) // [0, 3]
+	];
+};
+
+var buatBilanganAtauKurung = function(bolehKurung) {
+	if (bolehKurung && bilanganBulatAcak(1, 8) <= 3) {
+		var op = operasiAcak();
+		var ki = bilanganPecahanAcak(2, 9);
+		var ka = bilanganPecahanAcak(2, 9);
+		var hasil = hitung(ki, ka, op);
+		var suku = "<mrow><mo>(</mo>" + cetak(ki) + cetakO(op) + cetak(ka) + "<mo>)</mo></mrow>";
+		return [false, suku, hasil];
+	} else {
+		var a = bilanganPecahanAcak(2, 9);
+		return [true, cetak(a), a];
+	}
+};
+
+var buatSoal = function() {
+	var soal = "<math>";
+	var bolehKurung = true;
+	var op = operasiAcak();
+
+	var ki = buatBilanganAtauKurung(bolehKurung);
+	bolehKurung = bolehKurung && ki[0];
+
+	var ka = buatBilanganAtauKurung(bolehKurung);
+	bolehKurung = bolehKurung && ka[0];
+
+	soal += ki[1] + cetakO(op) + ka[1];
+	
+	var hasil = hitung(ki[2], ka[2], op);
+
+	if (bilanganBulatAcak(2, 9) % 2 == 0) {
+		op = operasiAcak();
+
+		ka = buatBilanganAtauKurung(bolehKurung);
+		bolehKurung = bolehKurung && ka[0];
+
+		soal += cetakO(op) + ka[1];
+		
+		hasil = hitung(hasil, ka[2], op);
+	}
+	return [
+		soal + "<mo>=</mo></math>",
+		hasil
+	];
+};
+	</script>
+</body>
+</html>

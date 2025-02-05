@@ -40,6 +40,10 @@ footer {
 	padding: 7px 0 8px;
 }
 
+.nowrap {
+	white-space: nowrap;
+}
+
 a,
 a:visited {
 	color: #2e2eff;
