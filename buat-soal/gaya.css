@@ -1,6 +1,6 @@
 html {
 	background-color: #17AC8C;
-	background-image: url(aset/latar-samping.png);
+	background-image: url(/aset/latar-samping.png);
 	background-position-y: bottom;
 	background-repeat: no-repeat;
 	background-size: 160px;
@@ -38,6 +38,11 @@ footer {
 	font-size: 12px;
 	margin-top: 24px;
 	padding: 7px 0 8px;
+}
+
+ul>li {
+	margin-top: 4px;
+	margin-bottom: 4px;
 }
 
 .nowrap {
