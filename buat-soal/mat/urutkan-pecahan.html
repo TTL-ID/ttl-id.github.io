@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="id" dir="ltr">
+<head>
+	<title>Mengurutkan Pecahan &mdash; Buat Soal &mdash; Team Tanpa Les Indonesia</title>
+	<meta charset="utf-8">
+	<meta name="author" content="Muhammad Rifqi Priyo Susanto">
+	<meta name="publisher" content="Team Tanpa Les Indonesia">
+	<meta name="viewport" content="width=device-width,height=device-height,initial-scale=1">
+	<meta property="og:title" content="Mengurutkan Pecahan &mdash; Buat Soal">
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="https://teamtanpales.id/buat-soal/mat/urutkan-pecahan.html">
+	<meta property="og:image" content="https://teamtanpales.id/aset/logo.svg">
+	<meta property="og:image:type" content="image/svg+xml">
+	<meta property="og:image:width" content="58">
+	<meta property="og:image:height" content="59">
+	<meta property="og:image:alt" content="Logo Team Tanpa Les Indonesia">
+	<meta property="og:locale" content="id_ID">
+	<meta property="og:site_name" content="Team Tanpa Les Indonesia">
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:site" content="@ttlindonesia">
+	<link rel="dns-prefetch" href="https://unpkg.com/">
+	<link rel="shortcut icon" href="/aset/logo.svg">
+	<link rel="stylesheet" href="https://unpkg.com/purecss@2.0.5/build/pure-min.css" integrity="sha384-LTIDeidl25h2dPxrB2Ekgc9c7sEC3CWGM6HeFmuDNUjX76Ert4Z4IY714dhZHPLd" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://unpkg.com/purecss@2.0.5/build/grids-responsive-min.css" crossorigin="anonymous">
+	<link rel="stylesheet" href="/buat-soal/gaya.css">
+	<style>
+#menuParameter, #menuSoal, #hasilPeriksa {
+	margin: 16px 0;
+}
+
+#panelStopwatch, #hasilSoal, #hasilSoal input, #hasilPeriksa {
+	font-size: 24px;
+}
+
+.formWithList div {
+	display: block;
+}
+
+#panelStopwatch {
+	background: white;
+	padding: 8px;
+	position: sticky;
+	top: 0;
+	text-align: center;
+	z-index: 99;
+}
+
+.naskahSoal {
+	display: flex;
+	flex-direction: column;
+	margin: 8px 0;
+}
+
+.naskahSoal input {
+	margin: 4px 0;
+}
+
+.naskahSoal input:disabled {
+	color: black;
+}
+
+.naskahSoal table {
+	border-collapse: collapse;
+}
+
+.naskahSoal table tr>td {
+	border: 1px solid gray;
+	padding: 4px;
+	text-align: center;
+}
+
+tr.tulisanPecahan>td {
+	font-size: 18px;
+}
+
+tr.tulisanPecahan>td>math {
+	font-size: 24px;
+}
+
+tr.besarPecahan>td, tr.namaKolom>td {
+	font-size: 12px;
+}
+
+tr.besarPecahan>td {
+	display: none;
+}
+
+.tampilBesarPecahan .besarPecahan>td {
+	display: table-cell;
+}
+
+.benar {
+	outline: 4px solid green;
+}
+
+.salah {
+	outline: 4px solid red;
+}
+
+.ikonJawaban {
+	font-size: 16px;
+	margin-left: 16px;
+}
+
+.kunciJawaban {
+	color: red;
+	margin-left: 16px;
+}
+
+@media screen and (min-width: 48em) {
+	.formWithList div {
+		display: inline-block;
+	}
+
+	.naskahSoal {
+		align-items: center;
+		flex-direction: row;
+	}
+
+	.naskahSoal table {
+		margin-right: 16px;
+	}
+
+	tr.tulisanPecahan>td>math {
+		padding: 0 8px;
+	}
+}
+	</style>
+</head>
+<body>
+	<header><a href="/"><img alt="Beranda" src="/aset/logo.svg" width="58" height="59"></a> Team Tanpa Les Indonesia</header>
+	<h1>Mengurutkan Bilangan Pecahan</h1>
+	<div id="menuParameter">
+		<p>Terdapat sejumlah pecahan dalam suatu barisan. Tugas kalian adalah mengurutkannya <b>dari yang terkecil sampai yang terbesar</b> (urutan menaik). Pecahan yang dibuat ada dalam tiga bentuk: pecahan biasa, persentase, dan desimal.</p>
+		<p>Pengisian jawaban menggunakan format <code>ABCD</code> (nama kolomnya) sesuai urutan seharusnya. Huruf besar/kecil tidak berpengaruh.</p>
+		<p>
+			<label for="isianJumlah">Jumlah soal:</label>
+			<input type="number" name="isianJumlah" id="isianJumlah" min="1" value="5">
+		</p>
+		<div class="formWithList">
+			<div>Jumlah pecahan tiap barisan:</div>
+			<div class="nowrap">
+				<input type="radio" name="isianN" id="isianN3" value="3">
+				<label for="isianN3">tiga</label>
+			</div>
+			<div class="nowrap">
+				<input type="radio" name="isianN" id="isianN4" value="4" checked>
+				<label for="isianN4">empat</label>
+			</div>
+			<div class="nowrap">
+				<input type="radio" name="isianN" id="isianN5" value="5">
+				<label for="isianN5">lima</label>
+			</div>
+		</div>
+		<p><button id="tombolBuat" disabled>Buat Soal</button></p>
+		<p><i lang="en">Stopwatch</i> akan dimulai segera setelah soal selesai dibuat.</p>
+	</div>
+	<div id="menuSoal" style="display:none;">
+		<div id="panelStopwatch"></div>
+		<div id="hasilSoal"></div>
+		<div id="hasilPeriksa"></div>
+		<div>
+			<button id="tombolPeriksa" disabled>Periksa Jawaban</button>
+			<button id="tombolUlang">Kembali ke Menu Awal</button>
+		</div>
+	</div>
+	<footer>Hak Cipta &copy; 2025 Team Tanpa Les Indonesia</footer>
+	<script>
+var kunciJawaban = [];
+var waktuMulai = 0;
+var intervalStopwatch;
+
+window.addEventListener("load", function() {
+	tombolBuat.removeAttribute("disabled");
+	tombolPeriksa.setAttribute("disabled", "disabled");
+});
+
+tombolBuat.addEventListener("click", function() {
+	var jumlahSoal = isianJumlah.value;
+	if (isNaN(jumlahSoal) || jumlahSoal < 1) {
+		alert("Jumlah soal setidaknya satu!");
+		return;
+	}
+	hasilSoal.className = "";
+	hasilSoal.innerHTML = "";
+	kunciJawaban = [];
+	var daftarSoal = "";
+	for (var i = 0; i < jumlahSoal; i ++) {
+		var soal = buatSoal();
+		kunciJawaban.push(soal[1]);
+		daftarSoal += "<div class=\"naskahSoal\">";
+		daftarSoal += "<div>" + soal[0] + "</div>";
+		daftarSoal += "<input type=\"text\" class=\"isianJawaban\" data-nomor=\"" + i + "\">";
+		daftarSoal += "</div>";
+	}
+	hasilSoal.innerHTML = daftarSoal;
+	hasilPeriksa.innerHTML = "";
+
+	tombolPeriksa.removeAttribute("disabled");
+	menuParameter.style.display = "none";
+	menuSoal.style.display = "";
+	document.getElementsByClassName("isianJawaban")[0].focus();
+
+	waktuMulai = Date.now();
+	panelStopwatch.innerHTML = "";
+	intervalStopwatch = setInterval(function () {
+		var durasi = Date.now() - waktuMulai; // ms
+		var detik = ((durasi % (60 * 1000)) / 1000).toFixed(1);
+		var menit = Math.floor(durasi / (60 * 1000));
+		var teksDetik = (detik < 10 ? "0" : "") + detik.replaceAll(".", ",");
+		var teksMenit = (menit < 10 ? "0" : "") + menit;
+		panelStopwatch.innerText = teksMenit + ":" + teksDetik;
+	}, 16);
+});
+
+tombolPeriksa.addEventListener("click", function() {
+	clearInterval(intervalStopwatch);
+	var daftarIsianJawaban = document.getElementsByClassName("isianJawaban");
+	var jumlahBenar = 0;
+	for (var i = 0; i < daftarIsianJawaban.length; i ++) {
+		var isian = daftarIsianJawaban[i];
+		var jawabanBenar = kunciJawaban[Number(isian.dataset.nomor)];
+		var jawabanPemain = isian.value.trim().toUpperCase().replaceAll(/[^A-Fa-f]/gi, "");
+		var jawabanSesuai = jawabanBenar == jawabanPemain;
+		if (isian.value.trim().length > 0 && jawabanSesuai) {
+			isian.classList.add("benar");
+			isian.insertAdjacentHTML("afterend", "<div><span class=\"ikonJawaban\">✅</span></div>");
+			jumlahBenar ++;
+		} else {
+			isian.classList.add("salah");
+			isian.insertAdjacentHTML("afterend", "<div><span class=\"ikonJawaban\">❌</span><span class=\"kunciJawaban\">(" + jawabanBenar + ")</span></div>");
+		}
+		isian.setAttribute("disabled", "disabled");
+	}
+	hasilSoal.className = "tampilBesarPecahan";
+
+	var persentaseBenar = (jumlahBenar / kunciJawaban.length * 100).toFixed(2).toString().replaceAll(".", ",");
+	hasilPeriksa.innerHTML = "Skor: " + jumlahBenar + "/" + kunciJawaban.length + " (" + persentaseBenar + "%)";
+
+	tombolPeriksa.setAttribute("disabled", "disabled");
+	window.scrollTo(0, hasilPeriksa.offsetTop);
+});
+
+tombolUlang.addEventListener("click", function() {
+	clearInterval(intervalStopwatch);
+	menuParameter.style.display = "";
+	menuSoal.style.display = "none";
+});
+
+var FPB = function(a, b) {
+	if (Number.isNaN(a) || Number.isNaN(b)) {
+		return a;
+	}
+	while (b != 0) {
+		var t = b;
+		b = a % b;
+		a = t;
+	}
+	return Math.abs(a);
+};
+
+var sederhanakan = function(a) {
+	var f = FPB(a[0], a[1]);
+	return [a[0] / f, a[1] / f];
+};
+
+var cetakPecahan = function(a) {
+	return "<math><mfrac><mn>" + a[0] + "</mn><mn>" + a[1] + "</mn></mfrac></math>";
+};
+
+var bilanganBulatAcak = function(a, b) {
+	a = a - 0.49;
+	b = b + 0.49;
+	return Math.round(Math.random() * (b - a) + a); // [a, b]
+};
+
+var bilanganPecahanAcak = function(a, b) {
+	var p = sederhanakan([bilanganBulatAcak(a, b), bilanganBulatAcak(a, b)]);
+	while (p[0] == p[1] || p[1] == 1) {
+		p = sederhanakan([bilanganBulatAcak(a, b), bilanganBulatAcak(a, b)]);
+	}
+	return p;
+};
+
+var buatSoal = function() {
+	// Penyebut awal harus memiliki faktor 2, 3, atau 5.
+	var penyebutAwal = bilanganBulatAcak(4, 25);
+	while ((penyebutAwal % 2) * (penyebutAwal % 3) * (penyebutAwal % 5) > 0) {
+		penyebutAwal = bilanganBulatAcak(4, 25);
+	}
+	var pembilangAwal = bilanganBulatAcak(2, penyebutAwal - 1);
+	var pecahanAwal = [pembilangAwal, penyebutAwal];
+
+	var jumlahPecahan = 0;
+	if (isianN3.checked) {
+		jumlahPecahan = 3;
+	} else if (isianN4.checked) {
+		jumlahPecahan = 4;
+	} else if (isianN5.checked) {
+		jumlahPecahan = 5;
+	} else {
+		throw new Error("Jumlah pecahan per barisan tidak sah!");
+	}
+
+	var daftarPecahan = [];
+	var jenisPecahan = "biasa";
+	var namaKolom = "ABCDEF".split("");
+
+	for (var i = 1; i <= jumlahPecahan; i++) {
+		var teksBilangan = "";
+		var nilaiBilangan = pecahanAwal[0] / pecahanAwal[1];
+		if (jenisPecahan == "biasa") {
+			teksBilangan = cetakPecahan(sederhanakan(pecahanAwal));
+			jenisPecahan = "persentase";
+		} else if (jenisPecahan == "persentase") {
+			teksBilangan = Number((nilaiBilangan * 100).toFixed(2)).toString().replaceAll(".", ",") + "%";
+			nilaiBilangan = Number(nilaiBilangan.toFixed(4));
+			jenisPecahan = "desimal";
+		} else if (jenisPecahan == "desimal") {
+			teksBilangan = Number(nilaiBilangan.toFixed(4)).toString().replaceAll(".", ",");
+			nilaiBilangan = Number(nilaiBilangan.toFixed(4));
+			jenisPecahan = "biasa";
+		}
+
+		var teksNilaiBilangan = nilaiBilangan.toString().replaceAll(".", ",");;
+		if (teksNilaiBilangan.length > 6) {
+			teksNilaiBilangan = teksNilaiBilangan.substring(0, 6) + "...";
+		}
+
+		daftarPecahan.push([
+			/* 0 */ teksBilangan,
+			/* 1 */ teksNilaiBilangan,
+			/* 2 */ nilaiBilangan,
+			/* 3 */ Math.random() // untuk pengacakan
+		]);
+
+		// Buat bilangan selanjutnya
+		var bilanganBaru = false;
+		while (!bilanganBaru || pecahanAwal[0] <= 0 || nilaiBilangan >= 1) {
+			if (bilanganBulatAcak(0, 1) < 0.5) {
+				if (bilanganBulatAcak(0, 1) < 0.5) {
+					pecahanAwal[0] += bilanganBulatAcak(1, 2);
+				} else {
+					pecahanAwal[0] -= bilanganBulatAcak(1, 2);
+				}
+			}
+			pecahanAwal[1] += bilanganBulatAcak(1, 2);
+			nilaiBilangan = pecahanAwal[0] / pecahanAwal[1];
+			var nilaiSama = false;
+			for (var i = 0; i < daftarPecahan.length; i ++) {
+				// Selisih digunakan untuk menghindari masalah floating-point.
+				if (Math.abs(daftarPecahan[i][2] - nilaiBilangan) < 0.00001) {
+					nilaiSama = true;
+					break;
+				}
+			}
+			if (!nilaiSama) {
+				bilanganBaru = true;
+			}
+		}
+	}
+	daftarPecahan.sort(function(a, b) {
+		return a[3] - b[3];
+	});
+	for (var i = 0; i < daftarPecahan.length; i++) {
+		daftarPecahan[i][3] = namaKolom[i];
+	}
+
+	var daftarPecahanTerurut = daftarPecahan.slice().sort(function(a, b) {
+		return a[2] - b[2];
+	});
+	var jawaban = "";
+	for (var i = 0; i < daftarPecahanTerurut.length; i++) {
+		jawaban += daftarPecahanTerurut[i][3];
+	}
+
+	var soal = '<table><tr class="tulisanPecahan">';
+	for (var i = 0; i < daftarPecahan.length; i++) {
+		soal += "<td>" + daftarPecahan[i][0] + "</td>";
+	}
+	soal += '</tr><tr class="besarPecahan">';
+	for (var i = 0; i < daftarPecahan.length; i++) {
+		soal += "<td>" + daftarPecahan[i][1] + "</td>";
+	}
+	soal += '</tr><tr class="namaKolom">';
+	for (var i = 0; i < daftarPecahan.length; i++) {
+		soal += "<td>" + daftarPecahan[i][3] + "</td>";
+	}
+	soal += "</tr></table>";
+
+	return [soal, jawaban];
+};
+	</script>
+</body>
+</html>
