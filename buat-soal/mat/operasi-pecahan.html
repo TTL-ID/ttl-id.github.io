@@ -153,6 +153,11 @@ tombolBuat.addEventListener("click", function() {
 	hasilSoal.innerHTML = daftarSoal;
 	hasilPeriksa.innerHTML = "";
 
+	tombolPeriksa.removeAttribute("disabled");
+	menuParameter.style.display = "none";
+	menuSoal.style.display = "";
+	document.getElementsByClassName("isianJawaban")[0].focus();
+
 	waktuMulai = Date.now();
 	panelStopwatch.innerHTML = "";
 	intervalStopwatch = setInterval(function () {
@@ -163,10 +168,6 @@ tombolBuat.addEventListener("click", function() {
 		var teksMenit = (menit < 10 ? "0" : "") + menit;
 		panelStopwatch.innerText = teksMenit + ":" + teksDetik;
 	}, 16);
-
-	tombolPeriksa.removeAttribute("disabled");
-	menuParameter.style.display = "none";
-	menuSoal.style.display = "";
 });
 
 tombolPeriksa.addEventListener("click", function() {
