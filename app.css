@@ -58,6 +58,14 @@ footer {
 
 .caption {
 	font-size: 90%;
+	position: relative;
+}
+
+.caption .number-video {
+	background: #ffffff;
+	left: calc(-71% + 4px);
+	padding: 2px 8px;
+	position: absolute;
 }
 
 .caption>div {
@@ -115,6 +123,11 @@ a.pure-button {
 
 	.caption {
 		font-size: 80%;
+	}
+
+	.caption .number-video {
+		left: initial;
+		top: -20px;
 	}
 
 	.caption figcaption {
