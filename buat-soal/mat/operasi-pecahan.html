@@ -147,6 +147,9 @@ tombolBuat.addEventListener("click", function() {
 	var daftarSoal = "";
 	for (var i = 0; i < jumlahSoal; i ++) {
 		var soal = buatSoal();
+		while (Math.abs(soal[1][0]) > 99 || Math.abs(soal[1][1]) > 99) {
+			soal = buatSoal();
+		}
 		kunciJawaban.push(soal[1]);
 		daftarSoal += "<div class=\"naskahSoal\">";
 		daftarSoal += "<div>" + soal[0] + "</div>";
