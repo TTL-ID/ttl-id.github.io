@@ -25,43 +25,9 @@
 	<link rel="shortcut icon" href="/aset/logo.svg">
 	<link rel="stylesheet" href="https://unpkg.com/purecss@2.0.5/build/pure-min.css" integrity="sha384-LTIDeidl25h2dPxrB2Ekgc9c7sEC3CWGM6HeFmuDNUjX76Ert4Z4IY714dhZHPLd" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://unpkg.com/purecss@2.0.5/build/grids-responsive-min.css" crossorigin="anonymous">
-	<link rel="stylesheet" href="/buat-soal/gaya.css">
+	<link rel="stylesheet" href="/buat-soal/gaya.min.css">
+	<link rel="stylesheet" href="/buat-soal/soal.min.css">
 	<style>
-#menuParameter, #menuSoal, #hasilPeriksa {
-	margin: 16px 0;
-}
-
-#panelStopwatch, #hasilSoal, #hasilSoal input, #hasilPeriksa {
-	font-size: 24px;
-}
-
-.formWithList div {
-	display: block;
-}
-
-#panelStopwatch {
-	background: white;
-	padding: 8px;
-	position: sticky;
-	top: 0;
-	text-align: center;
-	z-index: 99;
-}
-
-.naskahSoal {
-	display: flex;
-	flex-direction: column;
-	margin: 8px 0;
-}
-
-.naskahSoal input {
-	margin: 4px 0;
-}
-
-.naskahSoal input:disabled {
-	color: black;
-}
-
 .naskahSoal table {
 	border-collapse: collapse;
 }
@@ -92,34 +58,7 @@ tr.besarPecahan>td {
 	display: table-cell;
 }
 
-.benar {
-	outline: 4px solid green;
-}
-
-.salah {
-	outline: 4px solid red;
-}
-
-.ikonJawaban {
-	font-size: 16px;
-	margin-left: 16px;
-}
-
-.kunciJawaban {
-	color: red;
-	margin-left: 16px;
-}
-
 @media screen and (min-width: 48em) {
-	.formWithList div {
-		display: inline-block;
-	}
-
-	.naskahSoal {
-		align-items: center;
-		flex-direction: row;
-	}
-
 	.naskahSoal table {
 		margin-right: 16px;
 	}
@@ -169,88 +108,7 @@ tr.besarPecahan>td {
 	</div>
 	<footer>Hak Cipta &copy; 2025 Team Tanpa Les Indonesia</footer>
 	<script>
-var kunciJawaban = [];
-var waktuMulai = 0;
-var intervalStopwatch;
-
-window.addEventListener("load", function() {
-	tombolBuat.removeAttribute("disabled");
-	tombolPeriksa.setAttribute("disabled", "disabled");
-});
-
-tombolBuat.addEventListener("click", function() {
-	var jumlahSoal = isianJumlah.value;
-	if (isNaN(jumlahSoal) || jumlahSoal < 1) {
-		alert("Jumlah soal setidaknya satu!");
-		return;
-	}
-	hasilSoal.className = "";
-	hasilSoal.innerHTML = "";
-	kunciJawaban = [];
-	var daftarSoal = "";
-	for (var i = 0; i < jumlahSoal; i ++) {
-		var soal = buatSoal();
-		kunciJawaban.push(soal[1]);
-		daftarSoal += "<div class=\"naskahSoal\">";
-		daftarSoal += "<div>" + soal[0] + "</div>";
-		daftarSoal += "<input type=\"text\" class=\"isianJawaban\" data-nomor=\"" + i + "\">";
-		daftarSoal += "</div>";
-	}
-	hasilSoal.innerHTML = daftarSoal;
-	hasilPeriksa.innerHTML = "";
-
-	tombolPeriksa.removeAttribute("disabled");
-	menuParameter.style.display = "none";
-	menuSoal.style.display = "";
-	document.getElementsByClassName("isianJawaban")[0].focus();
-
-	waktuMulai = Date.now();
-	panelStopwatch.innerHTML = "";
-	intervalStopwatch = setInterval(function () {
-		var durasi = Date.now() - waktuMulai; // ms
-		var detik = ((durasi % (60 * 1000)) / 1000).toFixed(1);
-		var menit = Math.floor(durasi / (60 * 1000));
-		var teksDetik = (detik < 10 ? "0" : "") + detik.replaceAll(".", ",");
-		var teksMenit = (menit < 10 ? "0" : "") + menit;
-		panelStopwatch.innerText = teksMenit + ":" + teksDetik;
-	}, 16);
-});
-
-tombolPeriksa.addEventListener("click", function() {
-	clearInterval(intervalStopwatch);
-	var daftarIsianJawaban = document.getElementsByClassName("isianJawaban");
-	var jumlahBenar = 0;
-	for (var i = 0; i < daftarIsianJawaban.length; i ++) {
-		var isian = daftarIsianJawaban[i];
-		var jawabanBenar = kunciJawaban[Number(isian.dataset.nomor)];
-		var jawabanPemain = isian.value.trim().toUpperCase().replaceAll(/[^A-Fa-f]/gi, "");
-		var jawabanSesuai = jawabanBenar == jawabanPemain;
-		if (isian.value.trim().length > 0 && jawabanSesuai) {
-			isian.classList.add("benar");
-			isian.insertAdjacentHTML("afterend", "<div><span class=\"ikonJawaban\">✅</span></div>");
-			jumlahBenar ++;
-		} else {
-			isian.classList.add("salah");
-			isian.insertAdjacentHTML("afterend", "<div><span class=\"ikonJawaban\">❌</span><span class=\"kunciJawaban\">(" + jawabanBenar + ")</span></div>");
-		}
-		isian.setAttribute("disabled", "disabled");
-	}
-	hasilSoal.className = "tampilBesarPecahan";
-
-	var persentaseBenar = (jumlahBenar / kunciJawaban.length * 100).toFixed(2).toString().replaceAll(".", ",");
-	hasilPeriksa.innerHTML = "Skor: " + jumlahBenar + "/" + kunciJawaban.length + " (" + persentaseBenar + "%)";
-
-	tombolPeriksa.setAttribute("disabled", "disabled");
-	window.scrollTo(0, hasilPeriksa.offsetTop);
-});
-
-tombolUlang.addEventListener("click", function() {
-	clearInterval(intervalStopwatch);
-	menuParameter.style.display = "";
-	menuSoal.style.display = "none";
-});
-
-var FPB = function(a, b) {
+var FPB = function (a, b) {
 	if (Number.isNaN(a) || Number.isNaN(b)) {
 		return a;
 	}
@@ -262,22 +120,16 @@ var FPB = function(a, b) {
 	return Math.abs(a);
 };
 
-var sederhanakan = function(a) {
+var sederhanakan = function (a) {
 	var f = FPB(a[0], a[1]);
 	return [a[0] / f, a[1] / f];
 };
 
-var cetakPecahan = function(a) {
+var cetakPecahan = function (a) {
 	return "<math><mfrac><mn>" + a[0] + "</mn><mn>" + a[1] + "</mn></mfrac></math>";
 };
 
-var bilanganBulatAcak = function(a, b) {
-	a = a - 0.49;
-	b = b + 0.49;
-	return Math.round(Math.random() * (b - a) + a); // [a, b]
-};
-
-var bilanganPecahanAcak = function(a, b) {
+var bilanganPecahanAcak = function (a, b) {
 	var p = sederhanakan([bilanganBulatAcak(a, b), bilanganBulatAcak(a, b)]);
 	while (p[0] == p[1] || p[1] == 1) {
 		p = sederhanakan([bilanganBulatAcak(a, b), bilanganBulatAcak(a, b)]);
@@ -285,7 +137,7 @@ var bilanganPecahanAcak = function(a, b) {
 	return p;
 };
 
-var buatSoal = function() {
+var buatSoal = function () {
 	// Penyebut awal harus memiliki faktor 2, 3, atau 5.
 	var penyebutAwal = bilanganBulatAcak(4, 25);
 	while ((penyebutAwal % 2) * (penyebutAwal % 3) * (penyebutAwal % 5) > 0) {
@@ -362,14 +214,14 @@ var buatSoal = function() {
 			}
 		}
 	}
-	daftarPecahan.sort(function(a, b) {
+	daftarPecahan.sort(function (a, b) {
 		return a[3] - b[3];
 	});
 	for (var i = 0; i < daftarPecahan.length; i++) {
 		daftarPecahan[i][3] = namaKolom[i];
 	}
 
-	var daftarPecahanTerurut = daftarPecahan.slice().sort(function(a, b) {
+	var daftarPecahanTerurut = daftarPecahan.slice().sort(function (a, b) {
 		return a[2] - b[2];
 	});
 	var jawaban = "";
@@ -391,8 +243,24 @@ var buatSoal = function() {
 	}
 	soal += "</tr></table>";
 
-	return [soal, jawaban];
+	var jawabanHTML = "(" + jawaban + ")";
+
+	return [soal, jawabanHTML, jawaban];
+};
+
+var periksaJawaban = function (kunciJawaban, jawabanPemain) {
+	jawabanPemain = jawabanPemain.toUpperCase().replaceAll(/[^A-Fa-f]/gi, "");
+	return kunciJawaban == jawabanPemain;
+};
+
+var sebelumBuat = function () {
+	hasilSoal.className = "";
+};
+
+var setelahPeriksa = function () {
+	hasilSoal.className = "tampilBesarPecahan";
 };
 	</script>
+	<script src="/buat-soal/soal.min.js"></script>
 </body>
 </html>

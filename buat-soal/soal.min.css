@@ -1,0 +1,6 @@
+/**
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ */
+#hasilPeriksa,#menuParameter,#menuSoal{margin:16px 0}#hasilPeriksa,#hasilSoal,#hasilSoal input,#panelStopwatch{font-size:24px}.formWithList div{display:block}#panelStopwatch{background:#fff;padding:8px;position:sticky;text-align:center;top:0;z-index:99}.naskahSoal{display:flex;flex-direction:column;margin:8px 0}.naskahSoal input{margin:4px 0}.naskahSoal input:disabled{color:#000}.benar{outline:4px solid green}.salah{outline:4px solid red}.ikonJawaban{font-size:16px;margin-left:16px}.kunciJawaban{color:red;margin-left:16px}@media screen and (min-width:48em){.formWithList div{display:inline-block}.naskahSoal{align-items:center;flex-direction:row}}
