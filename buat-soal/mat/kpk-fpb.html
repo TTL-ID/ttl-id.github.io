@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<!-- This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
+<html lang="id" dir="ltr">
+<head>
+	<title>KPK dan FPB &mdash; Buat Soal &mdash; Team Tanpa Les Indonesia</title>
+	<meta charset="utf-8">
+	<meta name="author" content="Muhammad Rifqi Priyo Susanto">
+	<meta name="publisher" content="Team Tanpa Les Indonesia">
+	<meta name="viewport" content="width=device-width,height=device-height,initial-scale=1">
+	<meta property="og:title" content="KPK dan FPB &mdash; Buat Soal">
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="https://teamtanpales.id/buat-soal/mat/urutkan-pecahan.html">
+	<meta property="og:image" content="https://teamtanpales.id/aset/logo.svg">
+	<meta property="og:image:type" content="image/svg+xml">
+	<meta property="og:image:width" content="58">
+	<meta property="og:image:height" content="59">
+	<meta property="og:image:alt" content="Logo Team Tanpa Les Indonesia">
+	<meta property="og:locale" content="id_ID">
+	<meta property="og:site_name" content="Team Tanpa Les Indonesia">
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:site" content="@ttlindonesia">
+	<link rel="dns-prefetch" href="https://unpkg.com/">
+	<link rel="shortcut icon" href="/aset/logo.svg">
+	<link rel="stylesheet" href="https://unpkg.com/purecss@2.0.5/build/pure-min.css" integrity="sha384-LTIDeidl25h2dPxrB2Ekgc9c7sEC3CWGM6HeFmuDNUjX76Ert4Z4IY714dhZHPLd" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://unpkg.com/purecss@2.0.5/build/grids-responsive-min.css" crossorigin="anonymous">
+	<link rel="stylesheet" href="/buat-soal/gaya.min.css">
+	<link rel="stylesheet" href="/buat-soal/soal.min.css">
+</head>
+<body>
+	<header><a href="/"><img alt="Beranda" src="/aset/logo.svg" width="58" height="59"></a> Team Tanpa Les Indonesia</header>
+	<h1>KPK dan FPB</h1>
+	<div id="menuParameter">
+		<p>KPK adalah kelipatan persekutuan terkecil. FPB adalah faktor persekutuan terbesar.</p>
+		<p>
+			<label for="isianJumlah">Jumlah soal:</label>
+			<input type="number" name="isianJumlah" id="isianJumlah" min="1" value="8">
+		</p>
+		<div class="formWithList">
+			<div>Jenis soal:</div>
+			<div class="nowrap">
+				<input type="radio" name="isianJ" id="isianJ2" value="2" checked>
+				<label for="isianJ2">KPK dan FPB</label>
+			</div>
+			<div class="nowrap">
+				<input type="radio" name="isianJ" id="isianJK" value="KPK">
+				<label for="isianJK">KPK saja</label>
+			</div>
+			<div class="nowrap">
+				<input type="radio" name="isianJ" id="isianJF" value="FPB">
+				<label for="isianJF">FPB saja</label>
+			</div>
+		</div>
+		<p><button id="tombolBuat" disabled>Buat Soal</button></p>
+		<p><i lang="en">Stopwatch</i> akan dimulai segera setelah soal selesai dibuat.</p>
+	</div>
+	<div id="menuSoal" style="display:none;">
+		<div id="panelStopwatch"></div>
+		<div id="hasilSoal"></div>
+		<div id="hasilPeriksa"></div>
+		<div>
+			<button id="tombolPeriksa" disabled>Periksa Jawaban</button>
+			<button id="tombolUlang">Kembali ke Menu Awal</button>
+		</div>
+	</div>
+	<footer>Hak Cipta &copy; 2025 Team Tanpa Les Indonesia</footer>
+	<script>
+var stokSoalKPK = 0;
+var stokSoalFPB = 0;
+var KPKAtauFPB = "KPK";
+
+var FPB = function (a, b) {
+	while (b != 0) {
+		var t = b;
+		b = a % b;
+		a = t;
+	}
+	return Math.abs(a);
+};
+
+var KPK = function (a, b) {
+	return a * b / FPB(a, b);
+};
+
+var duaPangkatAcak = function () {
+	// 000111223
+	var p = bilanganBulatAcak(1, 9)
+	if (p <= 3) return 1; // 1/3
+	if (p <= 6) return 2; // 1/3
+	if (p <= 8) return 4; // 2/9
+	else        return 8; // 1/9
+};
+
+var tigaPangkatAcak = function () {
+	// 000111223
+	var p = bilanganBulatAcak(1, 9)
+	if (p <= 3) return  1; // 1/3
+	if (p <= 6) return  3; // 1/3
+	if (p <= 8) return  9; // 2/9
+	else        return 27; // 1/9
+};
+
+var limaPangkatAcak = function () {
+	// 00011
+	var p = bilanganBulatAcak(1, 5)
+	if (p <= 3) return 1; // 3/5
+	else        return 5; // 2/5
+};
+
+var tujuhPangkatAcak = function () {
+	// 00001
+	var p = bilanganBulatAcak(1, 5)
+	if (p <= 4) return 1; // 4/5
+	else        return 7; // 1/5
+};
+
+var bilanganAcakDariFaktor = function () {
+	// 2^a * 3^b * 5^c * 7^d
+	return duaPangkatAcak() *
+		tigaPangkatAcak() *
+		limaPangkatAcak() *
+		tujuhPangkatAcak();
+};
+
+var buatSoalKPK = function () {
+	var a = bilanganAcakDariFaktor();
+	var b = bilanganAcakDariFaktor();
+	var jawaban = KPK(a, b);
+
+	while (a == b || a < 10 || b < 10 ||
+			jawaban > 250 || jawaban == a || jawaban == b) {
+		a = bilanganAcakDariFaktor();
+		b = bilanganAcakDariFaktor();
+		jawaban = KPK(a, b);
+	}
+
+	return [
+		"KPK dari " + a + " dan " + b + " = &nbsp;",
+		"(" + jawaban + ")",
+		jawaban
+	];
+};
+
+var buatSoalFPB = function () {
+	var a = bilanganAcakDariFaktor();
+	var b = bilanganAcakDariFaktor();
+	var jawaban = FPB(a, b);
+
+	while (a == b || a < 10 || b < 10 ||
+			jawaban < 6 || jawaban > 250 || jawaban == a || jawaban == b) {
+		a = bilanganAcakDariFaktor();
+		b = bilanganAcakDariFaktor();
+		jawaban = FPB(a, b);
+	}
+
+	return [
+		"FPB dari " + a + " dan " + b + " = &nbsp;",
+		"(" + jawaban + ")",
+		jawaban
+	];
+};
+
+var buatSoal = function () {
+	if (stokSoalKPK > 0) {
+		stokSoalKPK --;
+		return buatSoalKPK();
+	}
+
+	if (stokSoalFPB > 0) {
+		stokSoalFPB --;
+		return buatSoalFPB();
+	}
+};
+
+var periksaJawaban = function (kunciJawaban, jawabanPemain) {
+	return !isNaN(jawabanPemain) && kunciJawaban == Number(jawabanPemain);
+};
+
+var sebelumBuat = function () {
+	stokSoalFPB = 0;
+	stokSoalKPK = 0;
+	var jumlahSoal = isianJumlah.value;
+	if (isianJ2.checked) {
+		stokSoalFPB = Math.floor(jumlahSoal / 2);
+		stokSoalKPK = Math.floor(jumlahSoal / 2);
+		jumlahSoal -= stokSoalFPB + stokSoalKPK;
+		if (jumlahSoal > 0) {
+			if (KPKAtauFPB == "KPK") {
+				KPKAtauFPB = "FPB";
+				stokSoalKPK += jumlahSoal;
+			} else if (KPKAtauFPB == "FPB") {
+				KPKAtauFPB = "KPK";
+				stokSoalFPB += jumlahSoal;
+			}
+		}
+	} else if (isianJK.checked) {
+		stokSoalFPB = 0;
+		stokSoalKPK = jumlahSoal;
+	} else if (isianJF.checked) {
+		stokSoalFPB = jumlahSoal;
+		stokSoalKPK = 0;
+	}
+};
+	</script>
+	<script src="/buat-soal/soal.min.js"></script>
+</body>
+</html>
