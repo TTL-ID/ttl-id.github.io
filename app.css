@@ -115,7 +115,7 @@ a.pure-button {
 	color: black;
 }
 
-@media screen and (min-width: 48em) {
+@media screen and (min-width: 864px) {
 	body {
 		max-width: 800px;
 		width: 100%;
