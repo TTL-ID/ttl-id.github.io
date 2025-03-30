@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<!-- This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
+<html lang="id" dir="ltr">
+<head>
+	<title>Bentuk Baku dan Tak Baku &mdash; Buat Soal &mdash; Team Tanpa Les Indonesia</title>
+	<meta charset="utf-8">
+	<meta name="author" content="Muhammad Rifqi Priyo Susanto">
+	<meta name="publisher" content="Team Tanpa Les Indonesia">
+	<meta name="viewport" content="width=device-width,height=device-height,initial-scale=1">
+	<meta property="og:title" content="Bentuk Baku dan Tak Baku &mdash; Buat Soal">
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="https://teamtanpales.id/buat-soal/bindo/bentuk-baku.html">
+	<meta property="og:image" content="https://teamtanpales.id/aset/logo.svg">
+	<meta property="og:image:type" content="image/svg+xml">
+	<meta property="og:image:width" content="58">
+	<meta property="og:image:height" content="59">
+	<meta property="og:image:alt" content="Logo Team Tanpa Les Indonesia">
+	<meta property="og:locale" content="id_ID">
+	<meta property="og:site_name" content="Team Tanpa Les Indonesia">
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:site" content="@ttlindonesia">
+	<link rel="dns-prefetch" href="https://unpkg.com/">
+	<link rel="shortcut icon" href="/aset/logo.svg">
+	<link rel="stylesheet" href="https://unpkg.com/purecss@2.0.5/build/pure-min.css" integrity="sha384-LTIDeidl25h2dPxrB2Ekgc9c7sEC3CWGM6HeFmuDNUjX76Ert4Z4IY714dhZHPLd" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://unpkg.com/purecss@2.0.5/build/grids-responsive-min.css" crossorigin="anonymous">
+	<link rel="stylesheet" href="/buat-soal/gaya.min.css">
+	<link rel="stylesheet" href="/buat-soal/soal.min.css">
+	<style>
+.naskahSoal {
+	margin: 16px 0;
+}
+
+.daftarPilihan>div:nth-child(1) {
+	font-size: 24px;
+}
+
+.pilihSatu .daftarPilihan>div>label {
+	font-size: 24px;
+}
+	</style>
+</head>
+<body>
+	<header><a href="/"><img alt="Beranda" src="/aset/logo.svg" width="58" height="59"></a> Team Tanpa Les Indonesia</header>
+	<h1>Bentuk Baku dan Tak Baku</h1>
+	<div id="menuParameter">
+		<p>Bentuk baku adalah penulisan suatu istilah yang telah distandarkan sesuai kaidah bahasa Indonesia. KBBI menjadi acuan utamanya.</p>
+		<p>
+			<label for="isianJumlah">Jumlah soal:</label>
+			<input type="number" name="isianJumlah" id="isianJumlah" min="1" value="5">
+		</p>
+		<div class="formWithList">
+			<div>Jenis soal:</div>
+			<div class="nowrap">
+				<input type="radio" name="isianJ" id="isianJ2" value="pilih" checked>
+				<label for="isianJ2">Pilih yang baku di antara dua</label>
+			</div>
+			<div class="nowrap">
+				<input type="radio" name="isianJ" id="isianJB" value="tentukan">
+				<label for="isianJB">Tentukan baku atau tak baku</label>
+			</div>
+		</div>
+		<p><button id="tombolBuat" disabled>Buat Soal</button></p>
+		<p><i lang="en">Stopwatch</i> akan dimulai segera setelah soal selesai dibuat.</p>
+	</div>
+	<div id="menuSoal" style="display:none;">
+		<div id="panelStopwatch"></div>
+		<div id="petunjukSoal"></div>
+		<div id="hasilSoal"></div>
+		<div id="hasilPeriksa"></div>
+		<div>
+			<button id="tombolPeriksa" disabled>Periksa Jawaban</button>
+			<button id="tombolUlang">Kembali ke Menu Awal</button>
+		</div>
+	</div>
+	<footer>
+		Hak Cipta &copy; 2025 Team Tanpa Les Indonesia
+		<span>Terakhir diperbarui: <time datetime="2025-03-30T10:00:00+07:00">30 Maret 2025 10.00 WIB</time><span id="jumlahPasangKata"></span></span>
+	</footer>
+	<script>
+var jenisSoal = "pilihan";
+var stokSoal = [];
+
+window.addEventListener("load", function () {
+	jumlahPasangan = (daftarPasangan.length - 2) / 2;
+	isianJumlah.max = jumlahPasangan;
+	jumlahPasangKata.innerText = " (" + jumlahPasangan + " pasang istilah)";
+});
+
+var isiStokSoal = function () {
+	stokSoal = new Array(jumlahPasangan);
+	for (var i = 0; i < jumlahPasangan; i ++) {
+		stokSoal[i] = [Math.random(), i];
+	}
+	stokSoal.sort(function (a, b) {
+		return a[0] - b[0];
+	});
+	for (var i = 0; i < jumlahPasangan; i ++) {
+		stokSoal[i] = stokSoal[i][1];
+	}
+};
+
+var buatSoal = function () {
+	if (stokSoal.length <= 0) {
+		isiStokSoal();
+	}
+	var indeks = stokSoal.pop() * 2;
+	var pasangan = daftarPasangan.slice(indeks, indeks + 2);
+	if (isianJ2.checked) {
+		var balikUrutan = Math.random() > 0.5;
+		return [
+			"",
+			pasangan[1],
+			pasangan[1],
+			balikUrutan ? [pasangan[1], pasangan[0]] : pasangan
+		];
+	} else if (isianJB.checked) {
+		var baku = Math.random() > 0.5;
+		return [
+			baku ? pasangan[1] : pasangan[0],
+			baku ? "baku" : "tak baku",
+			baku ? "baku" : "tak baku",
+			["baku", "tak baku"]
+		];
+	}
+};
+
+var periksaJawaban = function (kunciJawaban, jawabanPemain) {
+	return kunciJawaban == jawabanPemain;
+};
+
+var sebelumBuat = function () {
+	if (isianJ2.checked) {
+		petunjukSoal.innerText = "Petunjuk: Pilih yang baku di antara dua";
+		hasilSoal.className = "pilihSatu";
+	} else if (isianJB.checked) {
+		petunjukSoal.innerText = "Petunjuk: Tentukan baku atau tak baku";
+		hasilSoal.className = "";
+	} else {
+		petunjukSoal.innerText = "";
+		hasilSoal.className = "";
+	}
+};
+	</script>
+	<script src="/buat-soal/soal.min.js"></script>
+	<script src="/buat-soal/bindo/bentuk-baku.min.js"></script>
+</body>
+</html>
