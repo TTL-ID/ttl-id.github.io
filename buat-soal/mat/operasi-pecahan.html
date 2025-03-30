@@ -27,6 +27,11 @@
 	<link rel="stylesheet" href="https://unpkg.com/purecss@2.0.5/build/grids-responsive-min.css" crossorigin="anonymous">
 	<link rel="stylesheet" href="/buat-soal/gaya.min.css">
 	<link rel="stylesheet" href="/buat-soal/soal.min.css">
+	<style>
+#hasilSoal, #hasilSoal input {
+	font-size: 24px;
+}
+	</style>
 </head>
 <body>
 	<header><a href="/"><img alt="Beranda" src="/aset/logo.svg" width="58" height="59"></a> Team Tanpa Les Indonesia</header>
@@ -63,9 +68,11 @@
 	</div>
 	<footer>
 		Hak Cipta &copy; 2025 Team Tanpa Les Indonesia
-		<span>Terakhir diperbarui: <time datetime="2025-03-01T15:00:00+07:00">1 Maret 2025 15.00 WIB</time></span>
+		<span>Terakhir diperbarui: <time datetime="2025-03-30T07:00:00+07:00">30 Maret 2025 07.00 WIB</time></span>
 	</footer>
 	<script>
+var jenisSoal = "isian";
+
 var buatPecahan = function (teks) {
 	teks = teks.trim();
 	if (teks.length == 0) {

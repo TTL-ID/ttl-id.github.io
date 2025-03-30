@@ -28,6 +28,10 @@
 	<link rel="stylesheet" href="/buat-soal/gaya.min.css">
 	<link rel="stylesheet" href="/buat-soal/soal.min.css">
 	<style>
+#hasilSoal, #hasilSoal input {
+	font-size: 24px;
+}
+
 .naskahSoal table {
 	border-collapse: collapse;
 }
@@ -108,9 +112,11 @@ tr.besarPecahan>td {
 	</div>
 	<footer>
 		Hak Cipta &copy; 2025 Team Tanpa Les Indonesia
-		<span>Terakhir diperbarui: <time datetime="2025-03-06T18:00:00+07:00">6 Maret 2025 18.00 WIB</time></span>
+		<span>Terakhir diperbarui: <time datetime="2025-03-30T07:00:00+07:00">30 Maret 2025 07.00 WIB</time></span>
 	</footer>
 	<script>
+var jenisSoal = "isian";
+
 var FPB = function (a, b) {
 	while (b != 0) {
 		var t = b;
