@@ -37,7 +37,7 @@
 	<header><a href="/"><img alt="Beranda" src="/aset/logo.svg" width="58" height="59"></a> Team Tanpa Les Indonesia</header>
 	<h1>Operasi Bilangan Pecahan</h1>
 	<div id="menuParameter">
-		<p>Operasi bilangan pecahan biasa (<code>A/B</code>) ini mencakup penjumlahan (+), pengurangan (-), perkalian (×), pembagian (÷), dan kurung.</p>
+		<p>Operasi bilangan pecahan biasa (<code>A/B</code>) ini mencakup penjumlahan (+), pengurangan (-), dan kurung.</p>
 		<p>Pengisian jawaban menggunakan format <code>A/B</code> dengan <code>A</code> dan <code>B</code> bilangan bulat. Jika jawaban berupa bilangan bulat (penyebutnya satu), boleh ditulis tanpa tanda miring (hanya pembilang). Hanya pembilang yang boleh bernilai negatif.</p>
 		<p>
 			<label for="isianJumlah">Jumlah soal:</label>
@@ -68,7 +68,7 @@
 	</div>
 	<footer>
 		Hak Cipta &copy; 2025 Team Tanpa Les Indonesia
-		<span>Terakhir diperbarui: <time datetime="2025-03-30T07:00:00+07:00">30 Maret 2025 07.00 WIB</time></span>
+		<span>Terakhir diperbarui: <time datetime="2025-04-14T16:16:00+07:00">14 April 2025 16.16 WIB</time></span>
 	</footer>
 	<script>
 var jenisSoal = "isian";
@@ -186,8 +186,8 @@ var bilanganPecahanAcak = function (a, b) {
 };
 
 var operasiAcak = function () {
-	return ["+", "-", "×", "÷"][
-		bilanganBulatAcak(0, 3) // [0, 3]
+	return ["+", "-"][
+		bilanganBulatAcak(0, 1) // [0, 1]
 	];
 };
 
