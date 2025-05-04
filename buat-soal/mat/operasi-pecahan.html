@@ -37,7 +37,7 @@
 	<header><a href="/"><img alt="Beranda" src="/aset/logo.svg" width="58" height="59"></a> Team Tanpa Les Indonesia</header>
 	<h1>Operasi Bilangan Pecahan</h1>
 	<div id="menuParameter">
-		<p>Operasi bilangan pecahan biasa (<code>A/B</code>) ini mencakup penjumlahan (+), pengurangan (-), dan kurung.</p>
+		<p>Operasi bilangan pecahan biasa (<code>A/B</code>) ini mencakup penjumlahan (+), pengurangan (-), perkalian (×), pembagian (÷), dan kurung.</p>
 		<p>Pengisian jawaban menggunakan format <code>A/B</code> dengan <code>A</code> dan <code>B</code> bilangan bulat. Jika jawaban berupa bilangan bulat (penyebutnya satu), boleh ditulis tanpa tanda miring (hanya pembilang). Hanya pembilang yang boleh bernilai negatif.</p>
 		<p>
 			<label for="isianJumlah">Jumlah soal:</label>
@@ -68,7 +68,7 @@
 	</div>
 	<footer>
 		Hak Cipta &copy; 2025 Team Tanpa Les Indonesia
-		<span>Terakhir diperbarui: <time datetime="2025-04-14T16:16:00+07:00">14 April 2025 16.16 WIB</time></span>
+		<span>Terakhir diperbarui: <time datetime="2025-05-04T09:00:00+07:00">4 Mei 2025 09.00 WIB</time></span>
 	</footer>
 	<script>
 var jenisSoal = "isian";
@@ -186,9 +186,57 @@ var bilanganPecahanAcak = function (a, b) {
 };
 
 var operasiAcak = function () {
-	return ["+", "-"][
-		bilanganBulatAcak(0, 1) // [0, 1]
+	return ["+", "-", "×", "÷"][
+		bilanganBulatAcak(0, 3) // [0, 3]
 	];
+};
+
+var urutanOperator = {
+	"+": 1,
+	"-": 1,
+	"×": 2,
+	"÷": 2
+};
+
+var ubahKeRPN = function (daftarSuku) {
+	var keluaran = [];
+	var tumpukan = [];
+	for (var i = 0; i < daftarSuku.length; i ++) {
+		var suku = daftarSuku[i];
+		if (typeof suku == "string") { // operator
+			var urutanAtas = 0;
+			if (tumpukan.length > 0) {
+				var atas = tumpukan[tumpukan.length - 1];
+				urutanAtas = urutanOperator[atas];
+			}
+			if (urutanOperator[suku] > urutanAtas) {
+				tumpukan.push(suku);
+			} else {
+				keluaran.push(...tumpukan.reverse());
+				tumpukan = [suku];
+			}
+		} else { // bilangan
+			keluaran.push(suku);
+		}
+	}
+	keluaran.push(...tumpukan.reverse());
+	return keluaran;
+};
+
+var hitungHasilDariRPN = function (daftarSuku) {
+	var tumpukan = [];
+	for (var i = 0; i < daftarSuku.length; i ++) {
+		var suku = daftarSuku[i];
+		if (typeof suku == "string") { // operator
+			var ka = tumpukan.pop();
+			var ki = tumpukan.pop();
+			var hasil = hitung(ki, ka, suku);
+			tumpukan.push(hasil);
+		} else { // bilangan
+			tumpukan.push(suku);
+		}
+	}
+	return tumpukan.pop();
 };
 
 var buatBilanganAtauKurung = function (bolehKurung) {
@@ -208,28 +256,34 @@ var buatBilanganAtauKurung = function (bolehKurung) {
 var buatSoal2 = function () {
 	var soal = "<math>";
 	var bolehKurung = true;
-	var op = operasiAcak();
+	var daftarSuku = [];
 
 	var ki = buatBilanganAtauKurung(bolehKurung);
+	daftarSuku.push(ki[2]);
 	bolehKurung = bolehKurung && ki[0];
 
+	var op = operasiAcak();
+	daftarSuku.push(op);
+
 	var ka = buatBilanganAtauKurung(bolehKurung);
+	daftarSuku.push(ka[2]);
 	bolehKurung = bolehKurung && ka[0];
 
 	soal += ki[1] + cetakO(op) + ka[1];
 
-	var hasil = hitung(ki[2], ka[2], op);
-
 	if (bilanganBulatAcak(2, 9) % 2 == 0) {
 		op = operasiAcak();
+		daftarSuku.push(op);
 
 		ka = buatBilanganAtauKurung(bolehKurung);
+		daftarSuku.push(ka[2]);
 		bolehKurung = bolehKurung && ka[0];
 
 		soal += cetakO(op) + ka[1];
-
-		hasil = hitung(hasil, ka[2], op);
 	}
+
+	var kalimatRPN = ubahKeRPN(daftarSuku);
+	var hasil = hitungHasilDariRPN(kalimatRPN);
 
 	soal += "<mo>=</mo></math>";
 
