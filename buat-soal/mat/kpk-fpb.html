@@ -11,7 +11,7 @@
 	<meta name="viewport" content="width=device-width,height=device-height,initial-scale=1">
 	<meta property="og:title" content="KPK dan FPB &mdash; Buat Soal">
 	<meta property="og:type" content="website">
-	<meta property="og:url" content="https://teamtanpales.id/buat-soal/mat/urutkan-pecahan.html">
+	<meta property="og:url" content="https://teamtanpales.id/buat-soal/mat/kpk-fpb.html">
 	<meta property="og:image" content="https://teamtanpales.id/aset/logo.svg">
 	<meta property="og:image:type" content="image/svg+xml">
 	<meta property="og:image:width" content="58">
@@ -28,7 +28,6 @@
 	<link rel="stylesheet" href="/buat-soal/gaya.min.css">
 	<link rel="stylesheet" href="/buat-soal/soal.min.css">
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-GK42GYSVLY"></script>
-	<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-GK42GYSVLY');</script>
 	<style>
 #hasilSoal, #hasilSoal input {
 	font-size: 24px;
@@ -76,6 +75,7 @@
 		<span>Terakhir diperbarui: <time datetime="2025-03-30T07:00:00+07:00">30 Maret 2025 07.00 WIB</time></span>
 	</footer>
 	<script>
+var idSoal = "kpk-fpb";
 var jenisSoal = "isian";
 var stokSoalKPK = 0;
 var stokSoalFPB = 0;
@@ -191,25 +191,25 @@ var periksaJawaban = function (kunciJawaban, jawabanPemain) {
 var sebelumBuat = function () {
 	stokSoalFPB = 0;
 	stokSoalKPK = 0;
-	var jumlahSoal = isianJumlah.value;
+	var banyakSoal = jumlahSoal;
 	if (isianJ2.checked) {
-		stokSoalFPB = Math.floor(jumlahSoal / 2);
-		stokSoalKPK = Math.floor(jumlahSoal / 2);
-		jumlahSoal -= stokSoalFPB + stokSoalKPK;
-		if (jumlahSoal > 0) {
+		stokSoalFPB = Math.floor(banyakSoal / 2);
+		stokSoalKPK = Math.floor(banyakSoal / 2);
+		banyakSoal -= stokSoalFPB + stokSoalKPK;
+		if (banyakSoal > 0) {
 			if (KPKAtauFPB == "KPK") {
 				KPKAtauFPB = "FPB";
-				stokSoalKPK += jumlahSoal;
+				stokSoalKPK += banyakSoal;
 			} else if (KPKAtauFPB == "FPB") {
 				KPKAtauFPB = "KPK";
-				stokSoalFPB += jumlahSoal;
+				stokSoalFPB += banyakSoal;
 			}
 		}
 	} else if (isianJK.checked) {
 		stokSoalFPB = 0;
-		stokSoalKPK = jumlahSoal;
+		stokSoalKPK = banyakSoal;
 	} else if (isianJF.checked) {
-		stokSoalFPB = jumlahSoal;
+		stokSoalFPB = banyakSoal;
 		stokSoalKPK = 0;
 	}
 };
