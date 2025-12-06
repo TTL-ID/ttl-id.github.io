@@ -1,4 +1,5 @@
 html {
+	background-attachment: fixed;
 	background-image: url(aset/latar-samping.png);
 	background-position-y: bottom;
 	background-repeat: no-repeat;
@@ -9,9 +10,9 @@ body.pure-g {
 	align-items: center;
 	background-color: rgba(255, 255, 255, 0.9);
 	flex-flow: column nowrap;
-	height: 100vh;
 	margin: 0 auto;
 	max-width: 1200px;
+	min-height: 100vh;
 	width: 100vw;
 }
 
@@ -43,10 +44,6 @@ body.pure-g {
 	text-align: center;
 }
 
-.subjudul {
-	margin: 0.97em 0 0;
-}
-
 .center {
 	margin-left: auto;
 	margin-right: auto;
@@ -58,17 +55,6 @@ body.pure-g {
 	width: 100%;
 }
 
-.medsos {
-	font-size: 0;
-}
-
-.medsos img {
-	height: auto;
-	margin: 0 8px;
-	max-width: 48px;
-	width: calc(20% - 16px);
-}
-
 .tautan {
 	margin-top: 16px;
 }
@@ -78,6 +64,18 @@ body.pure-g {
 	border: 1px solid #17AC8C;
 	display: block;
 	margin: 4px 0;
+}
+
+.medsos {
+	font-size: 0;
+	margin-bottom: 32px;
+}
+
+.medsos img {
+	height: auto;
+	margin: 0 8px;
+	max-width: 48px;
+	width: calc(20% - 16px);
 }
 
 .show-md {
@@ -140,7 +138,7 @@ a.color-green {
 	}
 
 	.medsos img {
-		margin: 16px 16px 0 0;
+		margin: 0 16px 0 0;
 	}
 
 	.show-md {
