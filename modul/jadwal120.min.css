@@ -1,0 +1,6 @@
+/**
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ */
+.j120-wadah{align-items:stretch;background:#ffffff;border:1px solid black;box-sizing:border-box}.j120-wadah-pu{background:#99ff99}.j120-wadah-pbm{background:#ffff99}.j120-wadah-ppu{background:#ff9f89}.j120-wadah-pkpm{background:#ffccff}.j120-wadah-id{background:#bfbfbf}.j120-wadah-en{background:#ccecff}.j120-wadah-tanggal{border-right:1px solid black;box-sizing:border-box;display:flex;flex-direction:column;padding:8px}.j120-tanggal{display:flex;flex-direction:column;flex-grow:1;font-size:175%;justify-content:center}.j120-tanggal-ket{font-size:75%}.j120-wadah-materi{box-sizing:border-box;font-size:90%;padding:8px;text-align:left}.j120-materi-kategori{border-bottom:1px solid black;margin-bottom:4px;padding-bottom:2px;text-align:center}.j120-wadah-materi ul{margin:0;padding:0 0 0 8px}.j120-wadah-materi ul li::marker{content:'- '}.j120-panduan{background:#666666;color:#ffffff;font-size:80%;opacity:0;padding:4px;position:absolute;transition:opacity 800ms;width:312px;z-index:99}
