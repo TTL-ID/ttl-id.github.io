@@ -3,4 +3,4 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
-#menujuutbk{margin:0 auto;max-width:320px;text-align:center}.menujuutbk{align-items:center;background:white;border:4px solid #12bcb7;display:flex;justify-content:space-evenly;margin:12px 0;padding:12px 0}.menujuutbk-jumlah{font-size:175%}.menujuutbk-ket{font-size:75%}.menujuutbk-tanggal{font-size:90%}
+#menujuutbk{margin:0 auto;max-width:320px;text-align:center}.menujuutbk{background:white;border:4px solid #12bcb7;margin:12px 0}.menujuutbk>div{align-items:center;display:flex;justify-content:space-evenly;margin:12px 0}.menujuutbk-jumlah{font-size:175%}.menujuutbk-ket{font-size:75%}.menujuutbk-tahapan,.menujuutbk-tanggal{font-size:90%}
