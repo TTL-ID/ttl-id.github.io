@@ -1,9 +1,10 @@
 html {
-	background-color: #17AC8C;
+	background-color: #17ac8c;
 	background-image: url(/aset/latar-samping.png);
 	background-position-y: bottom;
 	background-repeat: no-repeat;
 	background-size: 160px;
+	color: black;
 }
 
 body {
@@ -133,5 +134,37 @@ a.pure-button {
 	.caption figcaption {
 		-webkit-line-clamp: 2;
 		line-clamp: 2;
+	}
+}
+
+@media (prefers-color-scheme: dark) {
+	html {
+		background-color: #094438;
+		color: white;
+	}
+
+	body {
+		background-color: #000000;
+	}
+
+	header {
+		background-color: #072e25;
+	}
+
+	header img {
+		background-color: #000000;
+	}
+
+	footer {
+		border-top: 1px solid #cccccc;
+	}
+
+	.caption .number-video {
+		background: #000000;
+	}
+
+	a,
+	a:visited {
+		color: #6969ff;
 	}
 }

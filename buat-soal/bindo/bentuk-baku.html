@@ -9,6 +9,7 @@
 	<meta name="author" content="Muhammad Rifqi Priyo Susanto">
 	<meta name="publisher" content="Team Tanpa Les Indonesia">
 	<meta name="viewport" content="width=device-width,height=device-height,initial-scale=1">
+	<meta name="color-scheme" content="light dark">
 	<meta property="og:title" content="Bentuk Baku dan Tak Baku &mdash; Buat Soal">
 	<meta property="og:type" content="website">
 	<meta property="og:url" content="https://teamtanpales.id/buat-soal/bindo/bentuk-baku.html">
@@ -42,14 +43,22 @@
 }
 
 .peringatan {
-	background: lightyellow;
-	border: 4px solid yellow;
+	background: #ffffe0;
+	border: 4px solid #ffff00;
+	color: black;
 	font-variant-emoji: emoji;
 	padding: 0 16px;
 }
 
 .peringatan details {
 	margin: 16px 0;
+}
+
+@media (prefers-color-scheme: dark) {
+	.peringatan {
+		background: #202000;
+		color: white;
+	}
 }
 	</style>
 </head>

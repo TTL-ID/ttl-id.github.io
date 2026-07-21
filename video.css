@@ -1,9 +1,10 @@
 html {
-	background-color: #17AC8C;
+	background-color: #17ac8c;
 	background-image: url(/aset/latar-samping.png);
 	background-position-y: bottom;
 	background-repeat: no-repeat;
 	background-size: 160px;
+	color: black;
 }
 
 body {
@@ -81,5 +82,33 @@ a.color-red {
 	body {
 		max-width: 800px;
 		width: 100%;
+	}
+}
+
+@media (prefers-color-scheme: dark) {
+	html {
+		background-color: #094438;
+		color: white;
+	}
+
+	body {
+		background-color: #000000;
+	}
+
+	header {
+		background-color: #072e25;
+	}
+
+	header img {
+		background-color: #000000;
+	}
+
+	footer {
+		border-top: 1px solid #cccccc;
+	}
+
+	a,
+	a:visited {
+		color: #6969ff;
 	}
 }
