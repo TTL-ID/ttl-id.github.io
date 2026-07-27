@@ -102,18 +102,14 @@ a:active {
 	color: #b30000;
 }
 
+a.pure-button,
 a.pure-button:visited {
-	color: rgba(0, 0, 0, 0.8);
+	color: black;
 }
 
 a.pure-button:hover,
 a.pure-button:active {
 	text-decoration: none;
-}
-
-.pure-button,
-a.pure-button {
-	color: black;
 }
 
 @media screen and (min-width: 864px) {

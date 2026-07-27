@@ -61,7 +61,8 @@ body.pure-g {
 	margin-top: 16px;
 }
 
-.tautan a {
+.tautan a,
+.tautan a:visited {
 	background-color: white;
 	border: 1px solid #17ac8c;
 	color: black;
@@ -104,8 +105,9 @@ a:active {
 	color: #b30000;
 }
 
+a.pure-button,
 a.pure-button:visited {
-	color: rgba(0, 0, 0, 0.8);
+	color: black;
 }
 
 a.pure-button:hover,
@@ -114,13 +116,15 @@ a.pure-button:active {
 }
 
 .color-red,
-a.color-red {
+a.color-red,
+a.color-red:visited {
 	background-color: #eb0000;
 	color: white;
 }
 
 .color-green,
-a.color-green {
+a.color-green,
+a.color-green:visited {
 	background-color: #17ac8c;
 	color: black;
 }
@@ -162,7 +166,8 @@ a.color-green {
 		background-color: rgba(0, 0, 0, 0.9);
 	}
 
-	.tautan a {
+	.tautan a,
+	.tautan a:visited {
 		background-color: black;
 		border: 1px solid #62eacd;
 		color: white;

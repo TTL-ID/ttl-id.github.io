@@ -63,8 +63,9 @@ a:active {
 	color: #b30000;
 }
 
+a.pure-button,
 a.pure-button:visited {
-	color: rgba(0, 0, 0, 0.8);
+	color: black;
 }
 
 a.pure-button:hover,
@@ -73,7 +74,8 @@ a.pure-button:active {
 }
 
 .color-red,
-a.color-red {
+a.color-red,
+a.color-red:visited {
 	background-color: #eb0000;
 	color: white;
 }
